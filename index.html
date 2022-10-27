@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Text Editor</title>
+</head>
+<body>
+    <h1>To Add Notes:</h1>
+    <p>Play the audio recording and pause when you want to want to add notes to a specific timestamp.</p>
+    <p>Press "Open Text Editor" Button, which will display a textbox for you to input notes.</p>
+    <p>Press submit when you are done taking notes and it will print your notes and the timepoint specified.</p>
+    
+    <audio id="audio" controls>
+        <source src="yay.mp3" type="audio/mp3">
+    </audio>
+    
+    <textarea id="textbox"></textarea>
+    <br>
+    <button onclick="openTextEditor()" id="open">Open Text Editor</button>
+    <button onclick="submit()" id="submit">Submit</button>
+    <div id="text-display"></div>
+    <script src="script.js"></script>
+</body>
+</html>

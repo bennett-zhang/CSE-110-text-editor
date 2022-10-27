@@ -1,0 +1,17 @@
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#textbox {
+    width: 500px;
+    height: 500px;
+    display: none;
+}
+
+.even {
+    background-color: antiquewhite;
+}
+
+.odd {
+    background-color: mintcream;
+}
