@@ -3,6 +3,17 @@ function openTextEditor() {
     textEditor.style.display = "block";
 }
 
+function playAud() {
+    const displayAud = document.getElementById('audio-display');
+        const aud = document.querySelector('input.audio-file').files[0];
+        document.querySelector('form').style.display = 'none';
+        const audURL = URL.createObjectURL(aud);
+        var playaud = document.getElementById("audio")
+        playaud.setAttribute('src', audURL);
+        document.getElementById('audio-display').style.display = "none";
+        playaud.style.display = "block";
+}
+
 let count = 0;
 
 function submit() {
