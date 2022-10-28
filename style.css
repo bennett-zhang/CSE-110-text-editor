@@ -8,6 +8,10 @@
     display: none;
 }
 
+audio {
+    display: none;
+}
+
 .even {
     background-color: antiquewhite;
 }

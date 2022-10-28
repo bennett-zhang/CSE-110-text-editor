@@ -13,8 +13,17 @@
     <p>Press "Open Text Editor" Button, which will display a textbox for you to input notes.</p>
     <p>Press submit when you are done taking notes and it will print your notes and the timepoint specified.</p>
     
+    <div class="form">
+        <form>
+            <label>Upload Audio File:
+                <br>
+                <input type="file" accept=".mp3" placeholder="" class="audio-file">
+            </label>
+        </form>
+        <button onclick="playAud()" id="audio-display">Annotate audio</button>
+    </div>
     <audio id="audio" controls>
-        <source src="yay.mp3" type="audio/mp3">
+        <source src=" " type="audio/mp3">
     </audio>
     
     <textarea id="textbox"></textarea>
