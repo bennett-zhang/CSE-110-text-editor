@@ -37,27 +37,32 @@ function getData(audioFile, callback) {
     };
 }
 
-// Takes input as seconds and returns time formatted as mm:ss
+// Takes input as seconds and returns time formatted as hh:mm:ss
 function formatTime(time) {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-
-    // Add an additional '0' if seconds is only one digit
-    if (seconds <= 9)
-        return `${minutes}:0${seconds}`;
+    const hours = Math.floor(time / 3600);
+    let minutes = Math.floor(time / 60) % 60;
+    let seconds = Math.floor(time % 60);
     
-    return `${minutes}:${seconds}`;
-}
+    // Append a 0 if seconds is only one digit
+    if (seconds < 10)
+        seconds = `0${seconds}`;
 
-// Takes formatted time and returns the number of seconds
-function timeToSeconds(time) {
-    time = time.split(":");
-    return time[0] * 60 + parseInt(time[1]);
+    // If the time is an hour or longer
+    if (hours) {
+        // Append a 0 if minutes is only one digit
+        if (minutes < 10)
+            minutes = `0${minutes}`;
+        
+        return `${hours}:${minutes}:${seconds}`;
+    }
+    
+    // If the time is shorter than an hour
+    return `${minutes}:${seconds}`;
 }
 
 // Called when submit button is pressed
 function submit() {
-    const timestamp = formatTime(audioPlayer.currentTime);
+    const timestamp = Math.floor(audioPlayer.currentTime);
     displayNote(timestamp, textEditor.value);
 
     // Store notes in local storage
@@ -74,15 +79,16 @@ function displayNote(timestamp, text) {
     // Create note
     const note = document.createElement("div");
     note.className = "note";
+    note.style.order = timestamp; // Order the notes by timestamp
 
     // Create a link that, when clicked, sets the audio player
     // to the timestamp
     const timestampLink = document.createElement("a");
     timestampLink.className = "timestamp";
-    timestampLink.textContent = timestamp;
+    timestampLink.textContent = formatTime(timestamp);
 
     timestampLink.addEventListener("click", () => {
-        audioPlayer.currentTime = timeToSeconds(timestamp);
+        audioPlayer.currentTime = timestamp;
     });
 
     // Create a container for the text

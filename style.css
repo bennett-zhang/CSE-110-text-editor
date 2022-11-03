@@ -18,11 +18,13 @@
 }
 
 #note-display {
+    display: flex;
+    flex-direction: column;
     margin: 10px 0px;
+    gap: 8px;
 }
 
 .note {
-    margin: 8px 0px;
     border: 0.5px solid lightgray;
     border-radius: 4px;
     padding: 7px 10px;
