@@ -14,11 +14,9 @@ function playAud() {
         playaud.style.display = "block";
 }
 
-let count = 0;
-
+// Called when submit button is pressed
 function submit() {
     const textEditor = document.getElementById("textbox");
-    const textDisplay = document.getElementById("text-display");
     const audio = document.getElementById("audio");
 
     const time = audio.currentTime;
@@ -28,19 +26,41 @@ function submit() {
     if (seconds <= 9)
         seconds = "0" + seconds
     
+    
+    const formattedTime = minutes + ":" + seconds;
+    displayNote(formattedTime, textEditor.value);
+
+    const notes = localStorage.notes ? JSON.parse(localStorage.notes) : {};
+    notes[formattedTime] = textEditor.value;
+    localStorage.notes = JSON.stringify(notes);
+
+    textEditor.value = "";
+}
+
+let count = 0;
+
+// Display note on screen
+function displayNote(timestamp, text) {
+    const textDisplay = document.getElementById("text-display");
     const box = document.createElement("div");
     
-
     if (count % 2 == 0) {
         box.classList.add("even");
     } else {
         box.classList.add("odd");
     }
 
-    box.innerHTML += minutes + ":" + seconds + " " + textEditor.value + "</div>";
+    box.innerHTML += timestamp + " " + text + "</div>";
     textDisplay.appendChild(box);
 
-    textEditor.value = "";
-
     count++;
+}
+
+
+// Load notes from local storage
+if (localStorage.notes) {
+    const notes = JSON.parse(localStorage.notes);
+
+    for (const key in notes)
+        displayNote(key, notes[key]);
 }
