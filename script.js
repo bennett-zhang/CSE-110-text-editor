@@ -5,7 +5,7 @@ function openTextEditor() {
 
 const audioInput = document.querySelector("input.audio-file");
 
-// Display audio file on screen
+/* Display audio file on screen */
 audioInput.addEventListener("change", () => {
     const aud = audioInput.files[0];
     document.querySelector("form").style.display = "none";
@@ -16,8 +16,9 @@ audioInput.addEventListener("change", () => {
 
     openTextEditor();
 });
+/* End of function for audio display */ 
 
-// Called when submit button is pressed
+/* Called when submit button is pressed */
 function submit() {
     const textEditor = document.getElementById("textbox");
     const audio = document.getElementById("audio");
@@ -39,9 +40,11 @@ function submit() {
     textEditor.value = "";
 }
 
+/* End of function for note submission*/ 
+
 let count = 0;
 
-// Display note on screen
+/* Display note on screen */
 function displayNote(timestamp, text) {
     const textDisplay = document.getElementById("text-display");
     const box = document.createElement("div");
@@ -57,7 +60,7 @@ function displayNote(timestamp, text) {
 
     count++;
 }
-
+/* End of function for note display */
 
 // Load notes from local storage
 if (localStorage.notes) {
