@@ -13,6 +13,8 @@ audioInput.addEventListener("change", () => {
     const playaud = document.getElementById("audio");
     playaud.setAttribute("src", audURL);
     playaud.style.display = "block";
+
+    openTextEditor();
 });
 
 // Called when submit button is pressed
@@ -26,7 +28,6 @@ function submit() {
 
     if (seconds <= 9)
         seconds = "0" + seconds
-    
     
     const formattedTime = minutes + ":" + seconds;
     displayNote(formattedTime, textEditor.value);
