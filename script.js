@@ -49,6 +49,12 @@ function formatTime(time) {
     return `${minutes}:${seconds}`;
 }
 
+// Takes formatted time and returns the number of seconds
+function timeToSeconds(time) {
+    time = time.split(":");
+    return time[0] * 60 + parseInt(time[1]);
+}
+
 // Called when submit button is pressed
 function submit() {
     const timestamp = formatTime(audioPlayer.currentTime);
@@ -63,24 +69,30 @@ function submit() {
     textEditor.value = "";
 }
 
-let noteCount = 0;
-
 // Display note on screen
 function displayNote(timestamp, text) {
     // Create note
     const note = document.createElement("div");
-    
-    // Style even and odd numbered notes differently
-    if (noteCount % 2 == 0)
-        note.classList.add("even");
-    else
-        note.classList.add("odd");
+    note.className = "note";
+
+    // Create a link that, when clicked, sets the audio player
+    // to the timestamp
+    const timestampLink = document.createElement("a");
+    timestampLink.className = "timestamp";
+    timestampLink.textContent = timestamp;
+
+    timestampLink.addEventListener("click", () => {
+        audioPlayer.currentTime = timeToSeconds(timestamp);
+    });
+
+    // Create a container for the text
+    const textDiv = document.createElement("div");
+    textDiv.innerText = text;
 
     // Populate note and display it on screen
-    note.innerHTML += timestamp + " " + text + "</div>";
+    note.appendChild(timestampLink);
+    note.appendChild(textDiv);
     noteDisplay.appendChild(note);
-
-    noteCount++;
 }
 
 // Load audio from local storage

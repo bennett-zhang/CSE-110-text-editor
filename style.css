@@ -1,5 +1,5 @@
 * {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
 #editor {
@@ -14,12 +14,31 @@
     display: block;
     width: 500px;
     height: 500px;
+    margin: 10px 0px;
 }
 
-.even {
-    background-color: aliceblue;
+#note-display {
+    margin: 10px 0px;
 }
 
-.odd {
-    background-color: mintcream;
+.note {
+    margin: 8px 0px;
+    border: 0.5px solid lightgray;
+    border-radius: 4px;
+    padding: 7px 10px;
+    background-color: #fcfcfc;
+}
+
+.timestamp {
+    color: dodgerblue;
+    cursor: pointer;
+}
+
+.timestamp:hover {
+    color: deepskyblue;
+    text-decoration: underline;
+}
+
+.timestamp:active {
+    color: skyblue;
 }
