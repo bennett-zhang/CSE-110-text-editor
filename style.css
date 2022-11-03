@@ -2,18 +2,22 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-#textbox {
-    width: 500px;
-    height: 500px;
+#editor {
     display: none;
 }
 
-audio {
-    display: none;
+#audio-player {
+    width: 500px;
+}
+
+#text-editor {
+    display: block;
+    width: 500px;
+    height: 500px;
 }
 
 .even {
-    background-color: antiquewhite;
+    background-color: aliceblue;
 }
 
 .odd {

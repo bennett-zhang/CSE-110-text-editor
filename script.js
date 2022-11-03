@@ -1,92 +1,102 @@
-function openTextEditor() {
-    const textEditor = document.getElementById("textbox");
-    textEditor.style.display = "block";
-}
+// Add all your HTML DOM elements here as global variables
+const audioForm = document.getElementById("audio-form");
+const audioInput = document.getElementById("audio-input");
+const editor = document.getElementById("editor");
+const audioPlayer = document.getElementById("audio-player");
+const textEditor = document.getElementById("text-editor");
+const noteDisplay = document.getElementById("note-display");
+const clearButton = document.getElementById("clear-button");
 
-const audioInput = document.querySelector("input.audio-file");
+// Set the source of the audio player, hide the audio input form,
+// and show the text editor
+function loadAudio(src) {
+    audioPlayer.src = src;
+    audioForm.style.display = "none";
+    editor.style.display = "block";
+}
 
 // When an audio file is uploaded
 audioInput.addEventListener("change", () => {
     // Display audio file on screen
-    const aud = audioInput.files[0];
-    document.getElementById("audio-form").style.display = "none";
-    const audURL = URL.createObjectURL(aud);
-    const playaud = document.getElementById("audio");
-    playaud.setAttribute("src", audURL);
-    playaud.style.display = "block";
+    const audioFile = audioInput.files[0];
+    const audioURL = URL.createObjectURL(audioFile);
+    loadAudio(audioURL);
 
     // Store audio file in local storage
-    getData(aud, base64 => {
+    getData(audioFile, base64 => {
         localStorage.audio = base64;
     });
-
-    openTextEditor();
 });
 
-// Convert audio file to base 64
+// Convert audio file to Base64
 function getData(audioFile, callback) {
     const reader = new FileReader();
+    reader.readAsDataURL(audioFile);
     reader.onload = evt => {
         callback(evt.target.result);
     };
-    reader.readAsDataURL(audioFile);
+}
+
+// Takes input as seconds and returns time formatted as mm:ss
+function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+
+    // Add an additional '0' if seconds is only one digit
+    if (seconds <= 9)
+        return `${minutes}:0${seconds}`;
+    
+    return `${minutes}:${seconds}`;
 }
 
 // Called when submit button is pressed
 function submit() {
-    const textEditor = document.getElementById("textbox");
-    const audio = document.getElementById("audio");
+    const timestamp = formatTime(audioPlayer.currentTime);
+    displayNote(timestamp, textEditor.value);
 
-    const time = audio.currentTime;
-    const minutes = Math.floor(time / 60);
-    let seconds = Math.floor(time % 60);
-
-    if (seconds <= 9)
-        seconds = "0" + seconds
-    
-    const formattedTime = minutes + ":" + seconds;
-    displayNote(formattedTime, textEditor.value);
-
+    // Store notes in local storage
     const notes = localStorage.notes ? JSON.parse(localStorage.notes) : {};
-    notes[formattedTime] = textEditor.value;
+    notes[timestamp] = textEditor.value;
     localStorage.notes = JSON.stringify(notes);
 
+    // Clear text editor
     textEditor.value = "";
 }
 
-let count = 0;
+let noteCount = 0;
 
 // Display note on screen
 function displayNote(timestamp, text) {
-    const textDisplay = document.getElementById("text-display");
-    const box = document.createElement("div");
+    // Create note
+    const note = document.createElement("div");
     
-    if (count % 2 == 0) {
-        box.classList.add("even");
-    } else {
-        box.classList.add("odd");
-    }
+    // Style even and odd numbered notes differently
+    if (noteCount % 2 == 0)
+        note.classList.add("even");
+    else
+        note.classList.add("odd");
 
-    box.innerHTML += timestamp + " " + text + "</div>";
-    textDisplay.appendChild(box);
+    // Populate note and display it on screen
+    note.innerHTML += timestamp + " " + text + "</div>";
+    noteDisplay.appendChild(note);
 
-    count++;
+    noteCount++;
 }
 
 // Load audio from local storage
-if (localStorage.audio) {
-    const playaud = document.getElementById("audio");
-    playaud.src = localStorage.audio;
-    playaud.style.display = "block";
-    document.getElementById("audio-form").style.display = "none";
-
-    openTextEditor();
-}
+if (localStorage.audio)
+    loadAudio(localStorage.audio);
 
 // Load notes from local storage
 if (localStorage.notes) {
     const notes = JSON.parse(localStorage.notes);
 
-    for (const key in notes)
-        displayNote(key, notes[key]);
+    // Loop through notes and display them on screen
+    for (const timestamp in notes)
+        displayNote(timestamp, notes[timestamp]);
 }
+
+// Clear local storage when button is pressed
+clearButton.addEventListener("click", () => {
+    localStorage.clear();
+});
