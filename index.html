@@ -15,14 +15,12 @@
     <p>4. Press submit to print your notes along with the 
         timestamp of the audio recording specified.</p>
     
-    <div class="form">
-        <form>
-            <label>Upload Audio File:
-                <br>
-                <input type="file" accept=".mp3" placeholder="" class="audio-file">
-            </label>
-        </form>
-    </div>
+    <form id="audio-form">
+        <label>Upload Audio File:
+            <br>
+            <input type="file" accept=".mp3" placeholder="" class="audio-file">
+        </label>
+    </form>
     <audio id="audio" controls>
         <source src=" " type="audio/mp3">
     </audio>

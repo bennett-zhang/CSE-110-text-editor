@@ -5,17 +5,32 @@ function openTextEditor() {
 
 const audioInput = document.querySelector("input.audio-file");
 
-// Display audio file on screen
+// When an audio file is uploaded
 audioInput.addEventListener("change", () => {
+    // Display audio file on screen
     const aud = audioInput.files[0];
-    document.querySelector("form").style.display = "none";
+    document.getElementById("audio-form").style.display = "none";
     const audURL = URL.createObjectURL(aud);
     const playaud = document.getElementById("audio");
     playaud.setAttribute("src", audURL);
     playaud.style.display = "block";
 
+    // Store audio file in local storage
+    getData(aud, base64 => {
+        localStorage.audio = base64;
+    });
+
     openTextEditor();
 });
+
+// Convert audio file to base 64
+function getData(audioFile, callback) {
+    const reader = new FileReader();
+    reader.onload = evt => {
+        callback(evt.target.result);
+    };
+    reader.readAsDataURL(audioFile);
+}
 
 // Called when submit button is pressed
 function submit() {
@@ -58,6 +73,15 @@ function displayNote(timestamp, text) {
     count++;
 }
 
+// Load audio from local storage
+if (localStorage.audio) {
+    const playaud = document.getElementById("audio");
+    playaud.src = localStorage.audio;
+    playaud.style.display = "block";
+    document.getElementById("audio-form").style.display = "none";
+
+    openTextEditor();
+}
 
 // Load notes from local storage
 if (localStorage.notes) {
