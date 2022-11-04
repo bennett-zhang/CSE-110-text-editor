@@ -174,4 +174,5 @@ if (localStorage.notes) {
 // Clear local storage when button is pressed
 clearButton.addEventListener("click", () => {
     localStorage.clear();
+    location.reload();
 });

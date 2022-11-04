@@ -2,6 +2,16 @@
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
 }
 
+body {
+    margin: 60px auto;
+    width: 750px;
+}
+
+#audio-input {
+    display: block;
+    margin-top: 7px;
+}
+
 @keyframes fadeIn {
     from {
       opacity: 0;
@@ -14,7 +24,6 @@
 
 #editor {
     display: none;
-    width: 550px;
     animation: fadeIn 0.75s;
 }
 
