@@ -120,15 +120,15 @@ function formatTime(time) {
 // Called when submit button is pressed
 function submit() {
     const timestamp = Math.floor(audioPlayer.currentTime);
-    displayNote(timestamp, textEditor.value);
+    displayNote(timestamp, textEditor.innerHTML);
 
     // Store notes in local storage
     const notes = localStorage.notes ? JSON.parse(localStorage.notes) : {};
-    notes[timestamp] = textEditor.value;
+    notes[timestamp] = textEditor.innerHTML;
     localStorage.notes = JSON.stringify(notes);
 
     // Clear text editor
-    textEditor.value = "";
+    textEditor.innerHTML = "";
 }
 
 // Display note on screen
@@ -150,7 +150,7 @@ function displayNote(timestamp, text) {
 
     // Create a container for the text
     const textDiv = document.createElement("div");
-    textDiv.innerText = text;
+    textDiv.innerHTML = text;
 
     // Populate note and display it on screen
     note.appendChild(timestampLink);
