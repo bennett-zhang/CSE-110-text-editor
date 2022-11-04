@@ -2,17 +2,74 @@
 const audioForm = document.getElementById("audio-form");
 const audioInput = document.getElementById("audio-input");
 const editor = document.getElementById("editor");
+const audioVisualizer = document.getElementById("audio-visualizer");
 const audioPlayer = document.getElementById("audio-player");
 const textEditor = document.getElementById("text-editor");
 const noteDisplay = document.getElementById("note-display");
 const clearButton = document.getElementById("clear-button");
 
 // Set the source of the audio player, hide the audio input form,
-// and show the text editor
+// show the editor, and set up the audio visualizer
 function loadAudio(src) {
     audioPlayer.src = src;
     audioForm.style.display = "none";
     editor.style.display = "block";
+
+    initAudioVisualizer();
+}
+
+// Set up the audio visualizer
+function initAudioVisualizer() {
+    // Set CSS dimensions to equal canvas dimensions
+    audioVisualizer.style.width = audioVisualizer.width + "px";
+    audioVisualizer.style.height = audioVisualizer.height + "px";
+
+    // Drawing context for the canvas
+    const ctx = audioVisualizer.getContext("2d");
+
+    const audioCtx = new AudioContext(); // Audio-processing graph
+    const analyser = audioCtx.createAnalyser(); // Exposes audio time and frequency data
+    analyser.fftSize = 2048; // Window size of Fast Fourier Transform
+
+    // Connect audio nodes together
+    const source = audioCtx.createMediaElementSource(audioPlayer);
+    source.connect(analyser);
+    source.connect(audioCtx.destination);
+
+    // Stores frequency data of audio
+    const data = new Uint8Array(analyser.frequencyBinCount);
+
+    // Calculate width of each bar
+    const barWidth = Math.round(audioVisualizer.width / data.length * 4);
+
+    // Linear gradient to use when displaying bars
+    const gradient = ctx.createLinearGradient(0, 0, audioVisualizer.width, 0);
+    gradient.addColorStop(0, "#FF00FF");
+    gradient.addColorStop(0.5, "#00FFFF");
+    gradient.addColorStop(1, "#00FFCC");
+    ctx.fillStyle = gradient;
+
+    animateAudioVisualizer();
+
+    // Draw audio visualization onto canvas
+    function animateAudioVisualizer() {
+        // Copy current frequency data into array
+        analyser.getByteFrequencyData(data);
+
+        // Clear canvas
+        ctx.clearRect(0, 0, audioVisualizer.width, audioVisualizer.height);
+
+        // Loop through frequencies
+        for (let i = 0; i < data.length; i++) {
+            // Calculate height of each bar
+            const barHeight = Math.round(audioVisualizer.height * Math.sqrt(data[i] / 255));
+
+            // Draw bar
+            ctx.fillRect(barWidth * i, audioVisualizer.height, barWidth, -barHeight);
+        }
+
+        requestAnimationFrame(animateAudioVisualizer);
+    }
 }
 
 // When an audio file is uploaded
