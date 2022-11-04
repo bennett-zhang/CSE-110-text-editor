@@ -28,6 +28,7 @@
 #audio-visualizer {
     display: block;
     margin: auto;
+    image-rendering: pixelated;
     animation: expand 0.75s;
 }
 
