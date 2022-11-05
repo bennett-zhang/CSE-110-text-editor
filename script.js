@@ -1,3 +1,5 @@
+"use strict";
+
 // Add all your HTML DOM elements here as global variables
 const audioForm = document.getElementById("audio-form");
 const audioInput = document.getElementById("audio-input");
