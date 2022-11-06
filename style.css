@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+
 * {
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+    font-family: "Nunito", "Trebuchet MS", sans-serif;
 }
 
 body {
@@ -10,6 +12,20 @@ body {
 #audio-input {
     display: block;
     margin-top: 7px;
+}
+
+::file-selector-button, button {
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(45deg, magenta, cyan) border-box;
+    font-family: inherit;
+}
+
+::file-selector-button:hover, button:hover {
+    background: linear-gradient(45deg, magenta, cyan) border-box;
+    color: white;
 }
 
 @keyframes fadeIn {
@@ -67,8 +83,7 @@ body {
 #note-display {
     display: flex;
     flex-direction: column;
-    margin: 10px 0px;
-    gap: 8px;
+    margin-top: 10px;
 }
 
 @keyframes fadeInDown {
@@ -84,6 +99,7 @@ body {
 }
 
 .note {
+    margin-bottom: 10px;
     border: 0.5px solid lightgray;
     border-radius: 4px;
     padding: 7px 10px;
