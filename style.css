@@ -21,6 +21,7 @@ body {
     background: linear-gradient(white, white) padding-box,
                 linear-gradient(45deg, magenta, cyan) border-box;
     font-family: inherit;
+    font-size: 13px;
 }
 
 ::file-selector-button:hover, button:hover {
