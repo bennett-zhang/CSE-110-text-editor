@@ -29,7 +29,14 @@
         <button onclick="submit()" id="submit">Submit</button>
     </div>
     
-    <div id="note-display"></div>
+    <div id="note-display">
+        <template id="note-template">
+            <div class="note">
+                <a class="timestamp"></a>
+                <div class="note-text"></div>
+            </div>
+        </template>
+    </div>
 
     <button id="clear-button">Clear Local Storage</button>
 

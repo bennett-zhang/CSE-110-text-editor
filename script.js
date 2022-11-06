@@ -8,6 +8,7 @@ const audioVisualizer = document.getElementById("audio-visualizer");
 const audioPlayer = document.getElementById("audio-player");
 const textEditor = document.getElementById("text-editor");
 const noteDisplay = document.getElementById("note-display");
+const noteTemplate = document.getElementById("note-template");
 const clearButton = document.getElementById("clear-button");
 
 // Set the source of the audio player, hide the audio input form,
@@ -135,28 +136,24 @@ function submit() {
 
 // Display note on screen
 function displayNote(timestamp, text) {
-    // Create note
-    const note = document.createElement("div");
-    note.className = "note";
-    note.style.order = timestamp; // Order the notes by timestamp
+    // Create copy of notes template
+    const note = noteTemplate.content.cloneNode(true);
 
-    // Create a link that, when clicked, sets the audio player
-    // to the timestamp
-    const timestampLink = document.createElement("a");
-    timestampLink.className = "timestamp";
+    // Order the notes by timestamp
+    note.querySelector(".note").style.order = timestamp;
+
+    // Link that sets the audio player to the timestamp when clicked
+    const timestampLink = note.querySelector(".timestamp");
     timestampLink.textContent = formatTime(timestamp);
 
     timestampLink.addEventListener("click", () => {
         audioPlayer.currentTime = timestamp;
     });
 
-    // Create a container for the text
-    const textDiv = document.createElement("div");
-    textDiv.innerHTML = text;
+    // Add the text to the note
+    note.querySelector(".note-text").innerHTML = text;
 
-    // Populate note and display it on screen
-    note.appendChild(timestampLink);
-    note.appendChild(textDiv);
+    // Display the note on screen
     noteDisplay.appendChild(note);
 }
 
